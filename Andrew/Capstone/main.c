@@ -302,6 +302,23 @@ void targetActual(void)
     P5->OUT = aBlue;
 }
 
+
+void sendData(void)
+{
+    int s = uRed;
+    for(int i = 0; i<3; i++)
+    {
+        for(int j = 0; j<8; j++)
+        {
+            clkPort = 0;
+            outPort = s%2;
+            clkPort = 1;
+            s=s/2;
+            clkPort = 0;
+        }
+    }
+}
+
 //For actual I2C reading from the sensors, will use https://www.vishay.com/docs/84331/designingveml6040.pdf
 
 int main(void)
@@ -359,6 +376,8 @@ int main(void)
         //Take whats been given and turn into real output
         userTarget();
         targetActual();
+
+        sendData();
 
         i++;
     }
